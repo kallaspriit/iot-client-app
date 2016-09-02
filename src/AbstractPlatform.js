@@ -39,6 +39,14 @@ export default class AbstractPlatform {
 		this.store = null;
 	}
 
+	getName() {
+		return null;
+	}
+
+	isUsingTenant() {
+		return false;
+	}
+
 	setStore(store) {
 		this.store = store;
 	}

@@ -18,7 +18,7 @@ export class PlatformApi extends AbstractPlatform {
 
 	setProvider(provider) {
 		this.provider = provider;
-		provider.setStore(this.config);
+		provider.setStore(this.store);
 
 		this._setupProxy();
 	}
@@ -42,7 +42,14 @@ export class PlatformApi extends AbstractPlatform {
 			return false;
 		}
 
-		if (['constructor', 'setStore'].indexOf(methodName) !== -1) {
+		const ignoreMethods = [
+			'constructor',
+			'setStore',
+			'getName',
+			'isUsingTenant',
+		];
+
+		if (ignoreMethods.indexOf(methodName) !== -1) {
 			return false;
 		}
 

@@ -11,6 +11,7 @@ import DockMonitor from 'redux-devtools-dock-monitor';
 import thunkMiddleware from 'redux-thunk';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import promiseMiddleware from 'redux-loading-promise-middleware';
+import platformManager from './services/platform-manager';
 import platformApi from './apis/platform-api';
 import getRoutes from './config/routes';
 import * as reducers from './reducers';
@@ -76,4 +77,6 @@ window.app = {
 	store,
 	reducer,
 	history,
+	platformApi,
+	platformManager,
 };

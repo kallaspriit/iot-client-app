@@ -3,8 +3,10 @@ import store from 'store';
 import keyMirror from 'keymirror';
 import { getDefaultAsyncState } from 'redux-loading-promise-middleware';
 import { SET_CREDENTIALS, AUTHENTICATE, LOGOUT } from '../config/constants';
+import platformManager from '../services/platform-manager';
 
 const StoreKey = keyMirror({
+	AUTHENTICATION_PLATFORM: null,
 	AUTHENTICATION_TENANT: null,
 	AUTHENTICATION_USERNAME: null,
 	AUTHENTICATION_PASSWORD: null,
@@ -14,6 +16,7 @@ const StoreKey = keyMirror({
 const defaultState = {
 	...getDefaultAsyncState(),
 	info: {
+		platform: store.get(StoreKey.AUTHENTICATION_PLATFORM, platformManager.getActivePlatform().getName()),
 		tenant: store.get(StoreKey.AUTHENTICATION_TENANT, ''),
 		username: store.get(StoreKey.AUTHENTICATION_USERNAME, ''),
 		password: store.get(StoreKey.AUTHENTICATION_PASSWORD, ''),
@@ -33,6 +36,7 @@ export default handleActions({
 		const isInvalidCredentials = action.payload.error !== null;
 
 		if (isLoggedIn) {
+			store.set(StoreKey.AUTHENTICATION_PLATFORM, state.info.platform);
 			store.set(StoreKey.AUTHENTICATION_TENANT, state.info.tenant);
 			store.set(StoreKey.AUTHENTICATION_USERNAME, state.info.username);
 			store.set(StoreKey.AUTHENTICATION_PASSWORD, state.info.password);
@@ -50,6 +54,7 @@ export default handleActions({
 		};
 	},
 	[LOGOUT]: (state, action) => {
+		store.remove(StoreKey.AUTHENTICATION_PLATFORM);
 		store.remove(StoreKey.AUTHENTICATION_TENANT);
 		store.remove(StoreKey.AUTHENTICATION_USERNAME);
 		store.remove(StoreKey.AUTHENTICATION_PASSWORD);
@@ -58,6 +63,7 @@ export default handleActions({
 		return {
 			...state,
 			info: {
+				platform: platformManager.getActivePlatform().getName(),
 				tenant: '',
 				username: '',
 				password: '',

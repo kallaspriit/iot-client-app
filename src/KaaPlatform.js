@@ -4,7 +4,7 @@ import DeviceModel from '../models/DeviceModel';
 import CapabilityModel from '../models/CapabilityModel';
 import MeasurementModel from '../models/MeasurementModel';
 
-export default class CumulocityPlatform extends AbstractPlatform {
+export default class KaaPlatform extends AbstractPlatform {
 
 	static capabilityTypeMapping = {
 		c8y_Relay: AbstractPlatform.CapabilityType.RELAY,
@@ -92,11 +92,11 @@ export default class CumulocityPlatform extends AbstractPlatform {
 	}
 
 	getName() {
-		return 'cumulocity';
+		return 'kaa';
 	}
 
 	isUsingTenant() {
-		return true;
+		return false;
 	}
 
 	authenticate(tenant, username, password) {
@@ -158,7 +158,7 @@ export default class CumulocityPlatform extends AbstractPlatform {
 		deviceId,
 		dateFrom = new Date(Date.now() - (24 * 60 * 60 * 1000)),
 		dateTo = new Date(),
-		aggregationType = CumulocityPlatform.AggregationType.NONE,
+		aggregationType = KaaPlatform.AggregationType.NONE,
 		pageSize = 24 * 60,
 		isRevertedOrder = true
 	) {
@@ -428,19 +428,19 @@ export default class CumulocityPlatform extends AbstractPlatform {
 	}
 
 	_mapCapabilityType(type) {
-		if (typeof CumulocityPlatform.capabilityTypeMapping[type] === 'undefined') {
+		if (typeof KaaPlatform.capabilityTypeMapping[type] === 'undefined') {
 			return AbstractPlatform.CapabilityType.UNSUPPORTED;
 		}
 
-		return CumulocityPlatform.capabilityTypeMapping[type];
+		return KaaPlatform.capabilityTypeMapping[type];
 	}
 
 	_mapMeasurementType(type) {
-		if (typeof CumulocityPlatform.measurementTypeMapping[type] === 'undefined') {
+		if (typeof KaaPlatform.measurementTypeMapping[type] === 'undefined') {
 			return AbstractPlatform.MeasurementType.UNSUPPORTED;
 		}
 
-		return CumulocityPlatform.measurementTypeMapping[type];
+		return KaaPlatform.measurementTypeMapping[type];
 	}
 
 	_mapChildDevice(info) {

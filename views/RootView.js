@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import CumulocityPlatform from '../src/CumulocityPlatform';
 import themeConfig from '../config/theme-config';
-import platformApi from '../apis/platform-api';
 
 import DrawerMenuComponent from './components/DrawerMenuComponent';
 
@@ -12,11 +10,6 @@ require('../gfx/css/main.scss');
 
 // setup theme
 const muiTheme = getMuiTheme(themeConfig);
-
-// setup platform
-const cumulocityPlatform = new CumulocityPlatform();
-
-platformApi.setProvider(cumulocityPlatform);
 
 // root view
 export default class RootView extends Component {
@@ -90,10 +83,3 @@ export default class RootView extends Component {
 		}
 	}
 }
-
-// for debugging only
-window.app = {
-	...window.app || {},
-	cumulocity: cumulocityPlatform,
-	platform: platformApi,
-};

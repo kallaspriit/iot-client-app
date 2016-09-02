@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
+import changeCase from 'change-case';
 
 import Card from 'material-ui/Card/Card';
 import CardTitle from 'material-ui/Card/CardTitle';
 import CardMedia from 'material-ui/Card/CardMedia';
 import CardText from 'material-ui/Card/CardText';
 import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
@@ -14,6 +17,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 import HeaderComponent from './components/HeaderComponent';
 import MessageComponent from './components/MessageComponent';
 
+import platformManager from '../services/platform-manager';
 import * as platformActions from '../actions/platform-actions';
 
 class AuthenticationView extends Component {
@@ -31,6 +35,7 @@ class AuthenticationView extends Component {
 		super(props);
 
 		this.state = {
+			platform: props.authentication.info.platform,
 			tenant: props.authentication.info.tenant,
 			username: props.authentication.info.username,
 			password: props.authentication.info.password,
@@ -79,14 +84,22 @@ class AuthenticationView extends Component {
 					<LinearProgress mode="indeterminate" style={loaderStyle} />
 					<CardText>
 						{this.renderMessage()}
-						<TextField
-							id="tenant"
-							hintText="Tenant"
+						<SelectField
+							id="platform"
 							fullWidth
 							disabled={isFormDisabled}
-							value={this.state.tenant}
-							onChange={(event) => this.handleTextFieldChange(event)}
-						/>
+							value={this.state.platform}
+							onChange={this.handlePlatformChange}
+						>
+							{platformManager.getPlatforms().map(
+								(platform) => <MenuItem
+									key={platform.getName()}
+									value={platform.getName()}
+									primaryText={changeCase.sentenceCase(platform.getName())}
+								/>
+							)}
+						</SelectField>
+						{this.renderTenantField(isFormDisabled)}
 						<TextField
 							id="username"
 							hintText="Username"
@@ -116,6 +129,23 @@ class AuthenticationView extends Component {
 					</CardText>
 				</Card>
 			</div>
+		);
+	}
+
+	renderTenantField(isFormDisabled) {
+		if (!platformManager.getActivePlatform().isUsingTenant()) {
+			return null;
+		}
+
+		return (
+			<TextField
+				id="tenant"
+				hintText="Tenant"
+				fullWidth
+				disabled={isFormDisabled}
+				value={this.state.tenant}
+				onChange={(event) => this.handleTextFieldChange(event)}
+			/>
 		);
 	}
 
@@ -167,7 +197,7 @@ class AuthenticationView extends Component {
 		this.props.authenticate();
 	}
 
-	handleLogout() {
+	handleLogout = () => {
 		this.props.logout();
 
 		this.setState({
@@ -177,9 +207,17 @@ class AuthenticationView extends Component {
 		});
 	}
 
-	handleTextFieldChange(event) {
+	handleTextFieldChange = (event) => {
 		this.setState({
 			[event.target.id]: event.target.value,
+		});
+	}
+
+	handlePlatformChange = (event, key, platformName) => {
+		platformManager.setActivePlatform(platformName);
+
+		this.setState({
+			platform: platformName,
 		});
 	}
 
