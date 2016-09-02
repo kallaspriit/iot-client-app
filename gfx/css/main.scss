@@ -1,0 +1,59 @@
+$emulation-max-width: 600px;
+$emulation-max-height: 1000px;
+
+// layout
+BODY {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	// justify-content: center;
+	min-height: 100vh;
+}
+
+#root {
+	width: 100%;
+	max-width: $emulation-max-width;
+	max-height: $emulation-max-height;
+	overflow: hidden;
+	overflow-y: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header-component {
+	max-width: $emulation-max-width;
+}
+
+.top-wrap {
+	height: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+}
+.main-contents {
+	padding-top: 64px;
+}
+
+// capabilities
+.capability-component {
+	.loader-wrap {
+		display: flex;
+		justify-content: center;
+		padding: 50px 0;
+	}
+}
+
+// highcharts
+.highcharts-yaxis-title {
+	font-size: 18px !important;
+	color: #000 !important;
+	fill: #000 !important;
+}
+
+// views
+@import "views/*.scss";
+
+// components
+@import "components/*.scss";
+
+// capabilities
+@import "components/capabilities/*.scss";

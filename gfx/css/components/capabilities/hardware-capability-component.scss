@@ -1,0 +1,11 @@
+.hardware-capability-component {
+	.info-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+
+		> LI {
+			padding: 10px 0;
+		}
+	}
+}

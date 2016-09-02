@@ -1,0 +1,20 @@
+.device-view {
+	.light-sensor-capability-component {
+		position: relative;
+		top: -20px;
+
+		.gauge-value-wrap {
+			text-align:center;
+
+			.gauge-value-number {
+				font-size:14px;
+				color:#000;
+			}
+
+			.gauge-value-unit {
+				font-size:10px;
+				color:#666;
+			}
+		}
+	}
+}

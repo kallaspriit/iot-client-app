@@ -1,0 +1,18 @@
+.message-component {
+	text-align: center;
+	visibility: hidden;
+	min-height: 30px;
+	line-height: 30px;
+
+	&.type-success {
+		color: #090;
+	}
+
+	&.type-error {
+		color: #900;
+	}
+
+	&.is-visible {
+		visibility: visible;
+	}
+}

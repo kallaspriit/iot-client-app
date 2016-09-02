@@ -1,0 +1,26 @@
+.position-sensor-capability-component {
+	height: 300px;
+	margin: -15px;
+
+	.marker-component {
+		position: absolute;
+		width: 40px;
+		height: 40px;
+		top: -40px;
+		left: -20px;
+		background-image: url("../images/map-marker-icon.png");
+		background-size: contain;
+
+		.marker-component-text {
+			position: absolute;
+			left: 0;
+			top: -30px;
+			padding: 4px 8px;
+			background-color: rgba(255, 255, 255, 0.5);
+			color: #000;
+			font-size: 18px;
+			border-radius: 3px;
+			white-space: nowrap;
+		}
+	}
+}
