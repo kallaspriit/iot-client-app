@@ -35,8 +35,8 @@ export default class KaaPlatform extends AbstractPlatform {
 	};
 
 	constructor({
-		protocol = 'https',
-		host = 'cumulocity.com',
+		protocol = 'http',
+		host = 'localhost:8080',
 	} = {}) {
 		super();
 
@@ -46,7 +46,7 @@ export default class KaaPlatform extends AbstractPlatform {
 		};
 
 		this.urls = {
-			authenticate: () => 'user/currentUser',
+			authenticate: () => 'kaaAdmin/rest/api/auth/checkAuth',
 			getDevices: () => 'inventory/managedObjects?fragmentType=c8y_IsDevice',
 			getDevice: (id) => `inventory/managedObjects/${id}`,
 			getRealtime: () => 'cep/realtime',
@@ -454,7 +454,7 @@ export default class KaaPlatform extends AbstractPlatform {
 	_buildUrl(query) {
 		const authenticationInfo = this.store.getState().authentication.info;
 
-		return `${this.network.protocol}://${authenticationInfo.tenant}.${this.network.host}/${query}`;
+		return `${this.network.protocol}://${this.network.host}/${query}`;
 	}
 
 	_getStandardRequestParameters() {

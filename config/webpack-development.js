@@ -7,7 +7,7 @@ const outputPath = path.join(basePath, 'dev');
 export default {
 	devtool: 'source-map',
 	entry: [
-		'webpack-dev-server/client?http://10.220.20.140:3000',
+		'webpack-dev-server/client?http://0.0.0.0',
 		'webpack/hot/only-dev-server',
 		'./app',
 	],

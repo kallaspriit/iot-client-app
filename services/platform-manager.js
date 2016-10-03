@@ -1,10 +1,8 @@
 import PlatformManager from '../src/PlatformManager';
-import CumulocityPlatform from '../src/CumulocityPlatform';
-import KaaPlatform from '../src/KaaPlatform';
+import platforms from '../config/platforms-config';
 
 const platformManager = new PlatformManager();
 
-platformManager.addPlatform(new CumulocityPlatform());
-platformManager.addPlatform(new KaaPlatform());
+platforms.forEach((platform) => platformManager.addPlatform(platform));
 
 export default platformManager;
